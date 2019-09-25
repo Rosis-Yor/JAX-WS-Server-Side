@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions
+	xmlns:cl="/coolschool/stubs/CustomerList/"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="CustomerList"
+	targetNamespace="/coolschool/stubs/CustomerList/">
+	<wsdl:types>
+		<xsd:schema
+			targetNamespace="/coolschool/stubs/CustomerList/">
+
+			<xsd:complexType name="customer">
+				<xsd:sequence>
+					<xsd:element name="id" type="xsd:int" maxOccurs="1" />
+					<xsd:element name="name" type="xsd:string" />
+					<xsd:element name="company" type="xsd:string" />
+					<xsd:element name="location" type="xsd:string" />
+					<xsd:element name="email" type="xsd:string" />
+				</xsd:sequence>
+
+			</xsd:complexType>
+
+			<xsd:element name="getCustomerRequest"
+				type="cl:getCustomerRequest" />
+			<xsd:element name="getCustomerResponse"
+				type="cl:getCustomerResponse" />
+
+
+			<xsd:complexType name="getCustomerRequest">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="CustomerID"
+						type="xsd:int" />
+				</xsd:sequence>
+			</xsd:complexType>
+
+
+			<xsd:complexType name="getCustomerResponse">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" maxOccurs="unbounded"
+						name="customer" type="cl:customer" />
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:element name="createCustomerRequest"
+				type="cl:createCustomerRequest" />
+			<xsd:element name="createCustomerResponse"
+				type="cl:createCustomerResponse" />
+
+			<xsd:complexType name="createCustomerRequest">
+				<xsd:sequence>
+					<xsd:element name="CustomerID" type="xsd:int" />
+					<xsd:element name="name" type="xsd:string" />
+					<xsd:element name="company" type="xsd:string" />
+					<xsd:element name="location" type="xsd:string" />
+					<xsd:element name="email" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+
+
+			<xsd:complexType name="createCustomerResponse">
+				<xsd:sequence>
+					<xsd:element minOccurs="1" name="confirm"
+						type="xsd:boolean" />
+				</xsd:sequence>
+			</xsd:complexType>
+
+		</xsd:schema>
+	</wsdl:types>
+
+	<wsdl:message name="getCustomerRequest">
+		<wsdl:part element="cl:getCustomerRequest" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="getCustomerResponse">
+		<wsdl:part element="cl:getCustomerResponse"
+			name="parameters" />
+	</wsdl:message>
+
+	<wsdl:message name="createCustomerRequest">
+		<wsdl:part element="cl:createCustomerRequest"
+			name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="createCustomerResponse">
+		<wsdl:part element="cl:createCustomerResponse"
+			name="parameters" />
+	</wsdl:message>
+
+	<wsdl:portType name="CustomerList">
+		<wsdl:operation name="getCustomer">
+			<wsdl:input message="cl:getCustomerRequest"
+				name="getCustomerRequest" />
+			<wsdl:output message="cl:getCustomerResponse"
+				name="getCustomerResponse" />
+		</wsdl:operation>
+
+		<wsdl:operation name="createCustomer">
+			<wsdl:input message="cl:createCustomerRequest"
+				name="createCustomerRequest" />
+			<wsdl:output message="cl:createCustomerResponse"
+				name="createCustomerResponse" />
+		</wsdl:operation>
+	</wsdl:portType>
+
+
+	<wsdl:binding name="CustomerListSOAP"
+		type="cl:CustomerList">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+
+		<wsdl:operation name="getCustomer">
+			<soap:operation soapAction="" style="document" />
+
+			<wsdl:input name="getCustomerRequest">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="getCustomerResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+
+		<wsdl:operation name="createCustomer">
+			<soap:operation soapAction="" />
+			<wsdl:input name="createCustomerRequest">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="createCustomerResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="CustomerList">
+		<wsdl:port binding="cl:CustomerListSOAP"
+			name="CustomerListSOAP">
+			<soap:address
+				location="http://localhost:8080/customerserviceproducer/services/customerList" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
